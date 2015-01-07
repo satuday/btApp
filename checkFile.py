@@ -6,28 +6,23 @@ import glob
 import subprocess
 import time
 import shutil
+import sys
 
 dest_dir = "C:\\1\\"
-
-def getCreateDateTime(filename):
-	ct = os.path.getctime(filename)
-	return datetime.fromtimestamp(ct)
-
+dl_dir = "Z:\\Download\\"
+bc_cmd = "C:\\Program Files\\BitComet\\BitComet.exe {0} -o {1} -s"
 
 def checkFiles(folderPath):
-	#now = datetime.now()
-	#delta = timedelta(seconds=5)
-	for file in glob.iglob(folderPath + "/*.txt"):
-		#ctime = getCreateDateTime(file)
-		#diff = now - ctime
-		#print file, diff
-		#if(diff <= delta):#change to <= for production
-			#os.startfile(file)
-			dest_file = dest_dir + os.path.basename(file)
-			print file, dest_file
-			if os.path.exists(dest_file):
-				os.remove(dest_file)
-			shutil.move(file, dest_dir)
+	for btfile in glob.iglob(folderPath + "*.txt"): #.torrent
+		dest_file = unicode(dest_dir + os.path.basename(btfile), sys.getfilesystemencoding())
+		uni_file = unicode(btfile, sys.getfilesystemencoding())
+		print uni_file, dest_file, 
+		print (bc_cmd.format(dest_file, dl_dir))
+		if os.path.exists(dest_file):
+			os.remove(dest_file)
+		shutil.copy2(uni_file, dest_dir)
+		#print (bc_cmd.format(dest_file, dl_dir)) #os.startfile(dest_file) 
+
 
 
 def longRunningProcess():
