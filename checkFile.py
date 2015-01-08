@@ -10,10 +10,9 @@ import time
 import shutil
 import sys
 
-
 dest_dir = "C:\\1\\"
 dl_dir = "Z:\\Download\\"
-bc_cmd = "C:\\Program Files\\BitComet\\BitComet.exe {0} -o {1} -s"
+bc_cmd = "C:\\Windows\\notepad.exe"
 
 def checkFiles(folderPath):
 	#shutil.move(unicode("C:\\[bbs[1][1].ysk.cc]足球小將世青賽全集13集全.txt", 'utf-8'), unicode("C:\\1\\[bbs[1][1].ysk.cc]足球小將世青賽全集13集全.txt", 'utf-8'))
@@ -22,7 +21,8 @@ def checkFiles(folderPath):
 		if os.path.exists(dest_file):
 			os.remove(dest_file)
 		shutil.move(btfile, dest_dir)
-		os.startfile(bc_cmd.format(dest_file, dl_dir)) 
+		args = [bc_cmd, dest_file]
+		subprocess.Popen(args) 
 		#os.startfile(dest_file) 
 
 def longRunningProcess():
@@ -32,5 +32,3 @@ def longRunningProcess():
 
 
 longRunningProcess()
-
-
