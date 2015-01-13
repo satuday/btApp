@@ -10,24 +10,27 @@ import time
 import shutil
 import sys
 
-dest_dir = "C:\\1\\"
+processed_dir = "C:\\1\\"
 dl_dir = "Z:\\Download\\"
 bc_cmd = "C:\\Program Files\\BitComet\\BitComet.exe"
 rar_cmd = "C:\\Program Files\\WinRAR\\Rar.exe"
 
-def checkFiles(folderPath):
+def uncompress(folderPath):
 	for rarfile in glob.iglob(folderPath + "*.rar" ):
 		print(rarfile)
 		args = [rar_cmd, "e", rarfile, "*.txt", "C:\\"]
 		subprocess.call(args)
 		os.remove(rarfile)
 
+def checkFiles(folderPath):
+	uncompress(folderPath)
 	for btfile in glob.iglob(folderPath + "*.txt"): #.torrent
-		dest_file = dest_dir + os.path.basename(btfile)
+		dest_file = processed_dir + os.path.basename(btfile)
 		if os.path.exists(dest_file):
 			os.remove(dest_file)
-		shutil.move(btfile, dest_dir)
-		args = [bc_cmd, dest_file, '-o ' + dest_dir, '-s']
+		shutil.move(btfile, processed_dir)
+		args = [bc_cmd, dest_file, '-o ' + processed_dir, '-s']
+		print("done")
 		#subprocess.Popen(args) 
 
 def longRunningProcess():
