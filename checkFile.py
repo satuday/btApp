@@ -12,18 +12,23 @@ import sys
 
 dest_dir = "C:\\1\\"
 dl_dir = "Z:\\Download\\"
-bc_cmd = "C:\\Windows\\notepad.exe"
+bc_cmd = "C:\\Program Files\\BitComet\\BitComet.exe"
+rar_cmd = "C:\\Program Files\\WinRAR\\Rar.exe"
 
 def checkFiles(folderPath):
-	#shutil.move(unicode("C:\\[bbs[1][1].ysk.cc]足球小將世青賽全集13集全.txt", 'utf-8'), unicode("C:\\1\\[bbs[1][1].ysk.cc]足球小將世青賽全集13集全.txt", 'utf-8'))
+	for rarfile in glob.iglob(folderPath + "*.rar" ):
+		print(rarfile)
+		args = [rar_cmd, "e", rarfile, "*.txt", "C:\\"]
+		subprocess.call(args)
+		os.remove(rarfile)
+
 	for btfile in glob.iglob(folderPath + "*.txt"): #.torrent
 		dest_file = dest_dir + os.path.basename(btfile)
 		if os.path.exists(dest_file):
 			os.remove(dest_file)
 		shutil.move(btfile, dest_dir)
-		args = [bc_cmd, dest_file]
-		subprocess.Popen(args) 
-		#os.startfile(dest_file) 
+		args = [bc_cmd, dest_file, '-o ' + dest_dir, '-s']
+		#subprocess.Popen(args) 
 
 def longRunningProcess():
 	while True:
